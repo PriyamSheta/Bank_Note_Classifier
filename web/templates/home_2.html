@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bank Note Classification</title>
+	<style>
+		body {
+			background-color: #f5f5f5;
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			line-height: 1.5;
+		}
+
+		h1 {
+			font-size: 28px;
+			font-weight: bold;
+			color: #921;
+			background-color: #d4d442;
+			padding: 10px;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(160, 5, 5, 0.1);
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+
+		h2 {
+			font-size: 24px;
+			font-weight: bold;
+			color: rgb(16, 43, 196);
+			margin-top: 20px;
+			margin-bottom: 10px;
+		}
+
+		h3 {
+			font-size: 20px;
+			font-weight: bold;
+			color: rgb(16,43,196);
+			margin-top: 20px;
+			margin-bottom: 10px;
+		}
+
+		p {
+			margin-top: 0;
+			margin-bottom: 10px;
+		}
+
+		img {
+			max-width: 100%;
+			height: auto;
+			display: block;
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+
+		form {
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 5px;
+		}
+
+		input[type=text] {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			margin-bottom: 10px;
+			box-sizing: border-box;
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			line-height: 1.5;
+		}
+
+		input[type=submit] {
+			background-color: hsl(0, 0%, 100%)243, 173, 173);
+			color: rgb(9, 9, 233);
+			padding: 10px 20px;
+			border: none;
+            font-weight: bold;
+			border-radius: 5px;
+			cursor: pointer;
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			line-height: 1.5;
+			transition: background-color 0.3s ease;
+		}
+
+		input[type=submit]:hover {
+			background-color: #444;
+		}
+	</style>
+</head>
+
+<body>
+    <h1 style="font-size: 40px;"> <center>Bank Note Classification </center></h1>
+	<h2><center>Problem Statement</center></h2>
+	<p><center>Counterfeit banknotes are a significant problem that affects many countries around the world. Counterfeit banknotes are fake banknotes that are produced with the intention of passing them off as genuine currency. Counterfeiters use a variety of methods to produce fake banknotes, including high-quality printing equipment and advanced technology. They often target high-value banknotes, such as the US dollar, Euro, and British pound, as they provide a greater potential return on investment. Counterfeit banknotes can have serious economic consequences, including undermining the confidence in a country's currency, increasing inflation, and damaging the economy as a whole. They can also harm businesses and individuals who unwittingly accept counterfeit banknotes, as they are not reimbursed for their losses. Governments and central banks around the world are constantly working to combat the problem of counterfeit banknotes through a range of measures, including the introduction of advanced security features on banknotes, improved training for bank staff and law enforcement officers, and increased public awareness campaigns to help people spot counterfeit banknotes.</center></p>
+
+	<h2><center>Dataset Description</center></h2>
+	<p><center>This dataset contains information on banknotes that have been classified as either genuine or counterfeit based on their skewness, variance, curtosis, and entropy values. There are four variables in the dataset:</center></p>
+    <p><center>1) Skewness: This variable represents the degree of asymmetry in the distribution of the banknote image. A negative skewness value indicates a longer tail on the left side of the distribution, while a positive skewness value indicates a longer tail on the right side of the distribution.</center></p>
+    <p><center>2) Variance: This variable represents the variance of the wavelet transformed image of the banknote. It provides information on the overall texture and complexity of the image.</center></p>
+    <p><center>3) Curtosis: This variable represents the degree of peakedness of the distribution of the banknote image. A positive kurtosis value indicates a sharper peak in the distribution, while a negative kurtosis value indicates a flatter peak.</center></p>
+    <p><center>4) Entropy: This variable represents the randomness or unpredictability of the pixel intensity values in the banknote image.</center></p></center></p>
+	<p><center>Each row in the dataset represents a single banknote, and the target variable (genuine or counterfeit) is included in the dataset. There are a total of N observations in the dataset. The dataset was originally sourced from a research study on banknote authentication using wavelet transform and neural networks. It has been pre-processed and cleaned for use in machine learning models.</center></p>
+
+
+    <h2><center>Why XGBoost Classifier?</center></h2>
+  <p><center>XGBoost (Extreme Gradient Boosting) is a popular machine learning algorithm that has gained significant popularity in recent years, particularly for classification tasks. It is known for its high prediction accuracy, which is achieved through an optimized gradient boosting algorithm. The algorithm is designed to minimize the loss function and improve the accuracy of the model with each iteration.It includes built-in regularization techniques that prevent overfitting, which is a common problem in machine learning. Regularization helps to improve the generalization ability of the model, making it more accurate on new and unseen data. It is designed to be highly scalable and can handle large datasets with high efficiency. The algorithm is optimized for parallel processing, which enables it to train models faster than other algorithms. Overall, XGBoost is a powerful algorithm that can deliver high accuracy and handle complex datasets with ease. Its flexibility and speed make it an ideal choice for a wide range of machine learning applications.</center></p>
+  
+    <h3><center>Visualizations</center></h3>
+	<center><img src="{{ url_for('static', filename='/images/distribution.png') }}" alt="Distribution of Classes"></center>
+	<p><center>This image shows the distribution of classes in the dataset. We can see that both the classes are almost equal in number and hence the chance of model overfitting the data is very less.</center></p>
+
+	<center><img src="{{ url_for('static', filename='/images/correlation.png') }}" alt="Correlation of the features"></center>
+	<p><center>This image shows the correlation of the features with each other. The values ranges between 0 and 1 and it helps to filter the features that have high correlation with the target variable.</center></p>
+
+    <center><img src="{{ url_for('static', filename='/images/features.png') }}" alt="Distribution of Features"></center>
+	<p><center>This image shows the distribution of features in the dataset. It shows all the values and its ranges of all the features.</center></p>
+
+    <center><img src="{{ url_for('static', filename='/images/confusion.png') }}" alt="Confusion Matrix of the model"></center>
+	<p><center>This graph shows the correlation matrix of the model trained and we can see that the model is predicting in a very good way and there are very less wrong predictions.</center></p>
+
+    
+	<h3><center>Input the data</center></h3>
+	
+    <form method="post" action="/predictions">
+        <center><label for="Variance">Variance</label></center>
+        <input type="text" id="Variance" name="Variance" value="{{request.form.get('Variance')}}" required>
+      
+        <center><label for="Skewness">Skewness</label></center>
+        <input type="text" id="Skewness" name="Skewness" value="{{request.form.get('Skewness')}}" required>
+      
+        <center><label for="Curtosis">Curtosis</label></center>
+        <input type="text" id="Curtosis" name="Curtosis" value="{{request.form.get('Curtosis')}}" required>
+      
+        <center><label for="Entropy">Entropy</label></center>
+        <input type="text" id="Entropy" name="Entropy" value="{{request.form.get('Entropy')}}" required>
+      
+        <center><button type="submit">Submit</button></center>
+      </form>
+      <p>Predictions based on the values given by the user:</p>
+      <p> There is a high chance of the note being <strong>{{ prediction}}</strong>.</p>
+
+</body>
+</html>
